@@ -2,7 +2,7 @@
 A Rust crate to iterate indefinitely over well spread points, similar to some leaf arrangement pattern in nature.
 
 ## Applications
-Ideal for generating colors.
+Ideal for generating distinct colors.
 
 |                        | Gradient       | Poisson Disk  |  Leaf spread  |
 | :---                   |     :---:      |     :---:     |     :---:     | 
