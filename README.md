@@ -20,6 +20,7 @@ fn main() {
     let color = Hsv::new(hue, 0.8, value);
     // use the color however
   }
+}
 ```
 
 ## How ?
