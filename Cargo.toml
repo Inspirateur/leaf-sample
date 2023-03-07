@@ -1,6 +1,6 @@
 [package]
 name = "leaf-spread"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "A crate to iterate indefinitely over well spread points, similar to some leaf arrangement pattern in nature"
 license = "Unlicense"
@@ -10,4 +10,3 @@ keywords = ["sampling", "distribution", "evenly", "spaced", "points"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-itertools = "0.10"
