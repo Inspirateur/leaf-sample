@@ -12,11 +12,11 @@ Ideal for generating a variable amount of distinct colors.
 
 ## Usage
 ```rust
-use leaf_spread::sample_iter;
+use leaf_spread::leaf_sample;
 use palette::Hsv;
 
 fn main() {
-  for (hue, value) in leaf_sample!(0..360, 0.6..1.0).take(10) {
+  for [hue, value] in leaf_sample!(0..360, 0.6..1.0).take(10) {
     let color = Hsv::new(hue, 0.8, value);
     // use the color however
   }
@@ -24,4 +24,4 @@ fn main() {
 ```
 
 ## How ?
-It's Golden ratio shenaningans
+Golden ratio shenaningans from http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences/

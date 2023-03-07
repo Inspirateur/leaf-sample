@@ -1,27 +1,43 @@
-use std::ops::Range;
+use std::{array::from_fn, ops::Range};
 
-pub struct LeafSample {
-    i: usize,
-    ampl: f64,
-    shift: f64
+fn golden(d: usize) -> f64 {
+    // Compute the generalised golden ratio
+    // => the unique positive root of x^(d+1) = x + 1
+    let p = 1. / (d as f64 + 1.);
+    let mut res = 1.;
+    for _ in 0..50 {
+        res = (res + 1f64).powf(p);
+    }
+    return res;
 }
 
-impl LeafSample {
-    pub fn new<T: Into<f64> + Copy>(bounds: Range<T>) -> Self {
-        LeafSample { 
-            i: 0, 
-            ampl: bounds.end.into()-bounds.start.into(),
-            shift: bounds.start.into() 
+pub(crate) struct GoldenSerie<const D: usize = 1> {
+    vals: [f64; D],
+    i: usize,
+    ampls: [f64; D],
+    shifts: [f64; D],
+}
+
+impl<const D: usize> GoldenSerie<D> {
+    pub fn new<T: Into<f64> + Copy>(bounds: [Range<T>; D]) -> Self {
+        GoldenSerie {
+            vals: from_fn(|i| 1. / golden(i + 1).powi(i as i32 + 1)),
+            i: 1,
+            ampls: bounds
+                .clone()
+                .map(|bound| bound.end.into() - bound.start.into()),
+            shifts: bounds.map(|bound| bound.start.into()),
         }
     }
 }
 
-impl Iterator for LeafSample {
-    type Item = f32;
+impl<const D: usize> Iterator for GoldenSerie<D> {
+    type Item = [f32; D];
 
     fn next(&mut self) -> Option<Self::Item> {
-        let dec = (self.i as f64*(1.0_f64 + 5.0_f64.sqrt())/2.0_f64).fract();
-        let res = (dec*self.ampl + self.shift) as f32;
+        let res = from_fn(|i| {
+            ((self.i as f64 * self.vals[i]).fract() * self.ampls[i] + self.shifts[i]) as f32
+        });
         self.i += 1;
         Some(res)
     }
